@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
@@ -19,23 +19,16 @@ async function main() {
     await client.connect();
     console.log("Connexion réussie à MongoDB");
 
-    // Interagir avec la base de données
     const database = client.db('shopping_db');
     const collection = database.collection('shopping_list');
 
-    // Endpoint pour voir la liste des courses dans une page web
+    // Afficher la liste des courses
     app.get('/', async (req, res) => {
-      const courses = await collection.find({}).toArray();
-      res.render('index', { items: courses });
+      const items = await collection.find({}).toArray();
+      res.render('index', { items });
     });
 
-    // Endpoint pour voir les courses en JSON
-    app.get('/courses', async (req, res) => {
-      const courses = await collection.find({}).toArray();
-      res.json(courses);
-    });
-
-    // Endpoint pour ajouter un nouvel élément dans la liste de courses
+    // Ajouter un nouvel article
     app.post('/add', async (req, res) => {
       const newItem = {
         item: req.body.item,
@@ -43,13 +36,32 @@ async function main() {
         price: parseFloat(req.body.price),
         category: req.body.category
       };
-      
-      try {
-        await collection.insertOne(newItem);
-        res.redirect('/');  // Rediriger vers la liste après ajout
-      } catch (error) {
-        res.status(500).send('Erreur lors de l\'ajout de l\'article');
+      await collection.insertOne(newItem);
+      res.redirect('/');
+    });
+
+    // Augmenter la quantité
+    app.post('/increase/:id', async (req, res) => {
+      const itemId = req.params.id;
+      await collection.updateOne(
+        { _id: new ObjectId(itemId) },
+        { $inc: { quantity: 1 } }
+      );
+      res.redirect('/');
+    });
+
+    // Diminuer la quantité
+    app.post('/decrease/:id', async (req, res) => {
+      const itemId = req.params.id;
+      const item = await collection.findOne({ _id: new ObjectId(itemId) });
+
+      if (item.quantity > 0) {
+        await collection.updateOne(
+          { _id: new ObjectId(itemId) },
+          { $inc: { quantity: -1 } }
+        );
       }
+      res.redirect('/');
     });
 
   } catch (e) {

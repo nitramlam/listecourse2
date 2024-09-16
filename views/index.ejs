@@ -20,6 +20,15 @@
           <span>Quantité : <%= item.quantity %></span>
           <span>Prix : <%= item.price.toFixed(2) %> €</span>
           <span>Catégorie : <%= item.category %></span>
+          
+          <!-- Ajouter les boutons pour augmenter et diminuer la quantité -->
+          <form action="/increase/<%= item._id %>" method="POST">
+            <button type="submit">+</button>
+          </form>
+          
+          <form action="/decrease/<%= item._id %>" method="POST">
+            <button type="submit">-</button>
+          </form>
         </li>
       <% }); %>
     </ul>
