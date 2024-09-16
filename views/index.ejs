@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ma Liste de Courses</title>
+  
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>Ma Liste de Courses</h1>
+  </header>
+
+  <div class="container">
+    <ul>
+      <% items.forEach(function(item) { %>
+        <li>
+          <span><%= item.item %></span>
+          <span>Quantité : <%= item.quantity %></span>
+          <span>Prix : <%= item.price.toFixed(2) %> €</span>
+          <span>Catégorie : <%= item.category %></span>
+        </li>
+      <% }); %>
+    </ul>
+
+    <form action="/add" method="POST">
+      <h3>Ajouter un nouvel article</h3>
+      <input type="text" name="item" placeholder="Nom de l'article" required>
+      <input type="number" name="quantity" placeholder="Quantité" required>
+      <input type="number" step="0.01" name="price" placeholder="Prix" required>
+      <select name="category" required>
+        <option value="Fruits">Fruits</option>
+        <option value="Légumes">Légumes</option>
+        <option value="Épicerie">Épicerie</option>
+        <option value="Boulangerie">Boulangerie</option>
+        <option value="Dairy">Produits laitiers</option>
+      </select>
+      <button type="submit">Ajouter</button>
+    </form>
+  </div>
+</body>
+</html>
