@@ -4,12 +4,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-// Configurer EJS et le middleware
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Connexion à MongoDB
+
 async function main() {
   const uri = "mongodb+srv://nitramlam:456123Fx37!@listecourses.qkghn.mongodb.net/?retryWrites=true&w=majority";
   const client = new MongoClient(uri);
@@ -22,13 +21,13 @@ async function main() {
     const database = client.db('shopping_db');
     const collection = database.collection('shopping_list');
 
-    // Afficher la liste des courses
+   
     app.get('/', async (req, res) => {
-      const items = await collection.find({}).toArray();
-      res.render('index', { items });
+      const itemsEnStock = await collection.find({ quantity: { $gt: 0 } }).toArray();
+      const itemsAAcheter = await collection.find({ quantity: { $lte: 0 } }).toArray();
+      res.render('index', { itemsEnStock, itemsAAcheter });
     });
 
-    // Ajouter un nouvel article
     app.post('/add', async (req, res) => {
       const newItem = {
         item: req.body.item,
@@ -40,7 +39,7 @@ async function main() {
       res.redirect('/');
     });
 
-    // Augmenter la quantité
+   
     app.post('/increase/:id', async (req, res) => {
       const itemId = req.params.id;
       await collection.updateOne(
@@ -50,17 +49,20 @@ async function main() {
       res.redirect('/');
     });
 
-    // Diminuer la quantité
+   
     app.post('/decrease/:id', async (req, res) => {
       const itemId = req.params.id;
-      const item = await collection.findOne({ _id: new ObjectId(itemId) });
+      await collection.updateOne(
+        { _id: new ObjectId(itemId) },
+        { $inc: { quantity: -1 } }
+      );
+      res.redirect('/');
+    });
 
-      if (item.quantity > 0) {
-        await collection.updateOne(
-          { _id: new ObjectId(itemId) },
-          { $inc: { quantity: -1 } }
-        );
-      }
+
+    app.post('/delete/:id', async (req, res) => {
+      const itemId = req.params.id;
+      await collection.deleteOne({ _id: new ObjectId(itemId) });
       res.redirect('/');
     });
 
@@ -71,7 +73,6 @@ async function main() {
 
 main().catch(console.error);
 
-// Lancer le serveur
 app.listen(port, () => {
   console.log(`Serveur lancé sur http://localhost:${port}`);
 });
