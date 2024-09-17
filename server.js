@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 async function main() {
-  const uri = process.env.MONGODB_URI || "mongodb+srv://nitramlam:456123Fx37!@listecourses.qkghn.mongodb.net/?retryWrites=true&w=majority&ssl=true&tlsInsecure=true";
+  const uri = process.env.MONGODB_URI || "mongodb+srv://nitramlam:456123Fx37!@listecourses.qkghn.mongodb.net/?retryWrites=true&w=majority&tls=true&tlsAllowInvalidCertificates=true";
   const client = new MongoClient(uri);
 
   try {
