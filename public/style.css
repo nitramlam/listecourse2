@@ -1,7 +1,7 @@
 /* Style général */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
+   font-family: "Bebas Neue", sans-serif;
+  background-color: #F5EB92;
   color: #333;
   margin: 0;
   padding: 0;
@@ -14,11 +14,18 @@ body {
 }
 
 header {
-  background-color: #4CAF50;
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #2F2F4E;
   color: white;
   text-align: center;
   padding: 15px 0;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
+  border-radius: 0 0 10px 10px;
+  width: 35%;
+  
+  
 }
 
 /* Grille pour les colonnes */
@@ -39,13 +46,13 @@ header {
 
 /* Couleurs distinctes pour chaque colonne */
 .stock {
-  background-color: #d4edda; /* Vert clair pour En Stock */
-  border: 2px solid #28a745; /* Bordure verte */
+  background-color: #DACD5B; /
+  
 }
 
 .a-acheter {
-  background-color: #f8d7da; /* Rouge clair pour À Racheter */
-  border: 2px solid #dc3545; /* Bordure rouge */
+  background-color: #68689f; /* Rouge clair pour À Racheter */
+  
 }
 
 /* Liste des articles */
@@ -58,7 +65,7 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e9e9ef;
+  background-color: #F5EB92;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 8px;
@@ -68,40 +75,52 @@ li {
 li span {
   flex: 1 1 100px;  /* Ajuste la taille minimale des éléments pour éviter les retours à la ligne */
   margin-right: 10px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  
 }
-
+.pomme{
+  font-weight: 600;
+}
+.achat{
+  color: white;
+}
+.stock2,.ajout{
+  color: #242440;
+}
 /* Boutons d'action */
 button {
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  
 }
 
-button[type="submit"] {
-  background-color: #4CAF50;
-  color: white;
+button {
+  background-color: #E8E8FF;
+  color: #242440;
   margin-right: 10px;
+  border: 1px solid #242440;
+  transition: background-color 0.3s ease; 
+  
+}
+button:hover{
+  background-color: #ADADFF;
+
 }
 
-button.delete-button {
-  background-color: #ff4d4d;
+button.delete-button, .boutonAjout {
+  background-color: #242440;
   color: white;
+  transition: background-color 0.3s ease; 
+}
+button.delete-button:hover, .boutonAjout:hover{
+  background-color: #3B3B68;
+
 }
 
-button.decrease {
-  background-color: #ff4d4d;
-  color: white;
-}
 
-button.increase {
-  background-color: #28a745;
-  color: white;
-}
 
-button:hover {
-  opacity: 0.9;
-}
 
 /* Formulaire */
 form {
@@ -112,20 +131,23 @@ form div {
   margin-bottom: 10px;
 }
 
+
 input, select {
+  background-color: #E8E8FF;
   padding: 8px;
-  width: 100%;
+  width: 50%;
   box-sizing: border-box;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #242440;
+  margin-bottom: 10px;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-button.add {
-  background-color: #4CAF50;
-  color: white;
-  width: 100%;
-  padding: 10px;
+
+select{
+  color: #757575;
 }
+
 
 @media (max-width: 768px) {
   .columns {
