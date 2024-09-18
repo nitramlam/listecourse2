@@ -22,7 +22,7 @@ header {
   text-align: center;
   padding: 15px 0;
   margin: 0 auto 20px auto;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 5px 5px;
   width: 35%;
   
   
@@ -39,7 +39,7 @@ header {
 .stock, .a-acheter {
   flex: 1;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 48%;  /* Ajuste la largeur des colonnes */
 }
@@ -68,7 +68,7 @@ li {
   background-color: #F5EB92;
   padding: 10px;
   margin-bottom: 10px;
-  border-radius: 8px;
+  border-radius: 5px;
   flex-wrap: wrap;
 }
 
